@@ -1,0 +1,151 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #51b2b6b4, #ae7bb4);
+  color: #333;
+}
+.timeline-content {
+  background: rgb(255, 254, 254);
+  padding: 15px 20px;
+  border-radius: 8px;
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+header {
+  background: nonlinear-gradient(135deg, #51b2b6b4, #ae7bb4)e;
+  padding: 30px 20px;
+  text-align: center;
+  border-bottom: 4px solid #ae7bb4;
+}
+
+header img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid #7e2668;
+  margin-bottom: 15px;
+  object-fit: cover;
+}
+
+
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto 50px; 
+  padding-left: 40px;
+  border-left: 3px solid #51b2b6b4; 
+}
+.timeline-item {
+  display: flex;
+  margin: 30px 0;
+  position: relative;
+}
+
+.timeline-year {
+  position: absolute;
+  left: -90px; 
+  font-weight: bold;
+  font-size: 18px;
+  color: #ae7bb4;
+}
+
+.timeline-content {
+  background: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 🔥 Hover-animation */
+.timeline-content:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.5em;
+  color: #7e2668;
+}
+
+header p {
+  font-size: 1.2em;
+  color: #7e2668;
+}
+
+section {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 25px;
+  background:rgb(253, 242, 253);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+h2 {
+  color: #885ca5;
+  border-bottom: 2px solid #5f5a5a;
+  padding-bottom: 8px;
+}
+
+ul {
+  line-height: 1.8;
+  list-style: none;
+  padding-left: 0;
+}
+
+ul li::before {
+  content: "✔ ";
+  margin-right: 5px;
+  color: #50136e;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9em;
+  background: rgba(255, 255, 255, 0.8);
+  margin-top: 40px;
+    position: relative;
+  z-index: 1;
+}
+
+footer a {
+  text-decoration: none;
+  color: #a24fa5;
+  font-weight: bold;
+}
+
+/* 🔹 Responsivt beteende */
+@media (max-width: 600px) {
+  .timeline {
+    border-left: none; /* نشيل الخط الجانبي */
+    padding-left: 0;
+  }
+
+  .timeline-item {
+    flex-direction: column; /* نخلي السنة فوق النص */
+    align-items: flex-start;
+    margin-left: 20px;
+  }
+
+  .timeline-item::before {
+    left: -10px; /* نعدل مكان الدائرة */
+  }
+
+  .timeline-year {
+    position: relative; /* نرجعها طبيعية */
+    left: 0;
+    margin-bottom: 5px;
+    color: #50136e;
+    font-size: 16px;
+  }
+
+  .timeline-content {
+    width: 100%; /* تاخد عرض الشاشة */
+    box-sizing: border-box;
+  }
+}
