@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Presentation - Rasha Khatib</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <img src="rasha.jpg" alt="rashabild">
+    <h1>Rasha Khatib</h1>
+    <p>Digital Presentation – Fullstack Java student</p>
+  </header>
+
+  <section>
+  <h2>Om mig</h2>
+  <p>Jag heter Rasha Khatib och jag gillar teknik och programmering. Jag är en noggrann och ansvarsfull person som gillar att organisera, hålla tider och hjälpa människor. 
+</p>
+  
+</section>
+
+
+  <section>
+    <h2>Tidslinje</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">2020</div>
+        <div class="timeline-content">
+          <h3>Första jobbet</h3>
+          <p>Började arbeta som Studentassistent.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2022</div>
+        <div class="timeline-content">
+          <h3>Andra jobbet</h3>
+          <p>Började arbeta som Undersköterska.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2025</div>
+        <div class="timeline-content">
+          <h3>Fullstack Java</h3>
+          <p>Startade utbildning till Fullstack Java-utvecklare.</p>
+        </div>
+      </div>
+    </div>
+    <h3>Utbildning</h3>
+    <ul>
+      <li>Matematik 3</li>
+      <li>Svenska 3</li>
+      <li>Engelska 6</li>
+      <li>Programmering 1</li>
+      <li>Ekonomi 1</li>
+    </ul>
+    <h3>Kunskaper</h3>
+    <ul>
+      <li>Mycket god svenska och engelska</li>
+      <li>Mycket god digital dokumentation</li>
+      <li>Datorvana: Word, Excel m.m.</li>
+    </ul>
+  </section>
+
+  <section>
+  <h2>Mina intressen</h2>
+  <ul>
+    <li>Att läsa böcker</li>
+    <li>Matlagning</li>
+    <li>Fotografering</li>
+    <li>Resor</li>
+  </ul>
+</section>
+
+
+  <section>
+    <h2>Varför jag valde att studera Fullstack Java</h2>
+    <p>Jag valde att studera Fullstack Java eftersom jag är intresserad av teknik och programmering, 
+      och jag vill utveckla mig inom ett område som har stor betydelse i framtiden. 
+      Att arbeta som fullstackutvecklare ger mig möjlighet att kombinera logiskt tänkande, problemlösning och kreativitet.</p>
+  </section>
+
+
+<!-- ⛅️ Weather (Open-Meteo) – لا يحتاج API Key -->
+<section id="weather" style="max-width:900px;margin:30px auto;padding:20px;border-radius:12px;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.08)">
+  <h2 style="margin-top:0;color:#7e2668">Vädret just nu</h2>
+
+  <form id="weather-form" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+    <input id="city" type="text" placeholder="Skriv en stad, t.ex. Varberg eller Stockholm" value="Stockholm"
+      style="flex:1;min-width:220px;padding:10px 12px;border:1px solid #ddd;border-radius:8px" />
+    <button type="submit" style="padding:10px 16px;border:0;border-radius:8px;background:#885ca5;color:#fff;cursor:pointer">
+      Hämta väder
+    </button>
+  </form>
+
+  <div id="weather-card" style="display:none;align-items:center;gap:14px">
+    <div id="w-emoji" style="font-size:36px;line-height:1">⛅️</div>
+    <div>
+      <div id="w-title" style="font-weight:700;margin-bottom:4px">Stockholm</div>
+      <div id="w-line" style="color:#444"></div>
+      <div id="w-extra" style="color:#666;font-size:.95em"></div>
+    </div>
+  </div>
+
+  <div id="weather-error" style="display:none;color:#b00020;margin-top:8px"></div>
+</section>
+
+<script>
+  // 🗺️ دالّة صغيرة لتحويل كود الطقس إلى وصف + إيموجي (Open-Meteo weathercode)
+  function codeToDesc(n) {
+    const map = [
+      { codes: [0], text: "Klar himmel", emoji: "☀️" },
+      { codes: [1, 2], text: "Mest klart", emoji: "🌤️" },
+      { codes: [3], text: "Mulet", emoji: "☁️" },
+      { codes: [45, 48], text: "Dimma", emoji: "🌫️" },
+      { codes: [51, 53, 55], text: "Duggregn", emoji: "🌦️" },
+      { codes: [56, 57], text: "Frusande duggregn", emoji: "🌧️" },
+      { codes: [61, 63, 65], text: "Regn", emoji: "🌧️" },
+      { codes: [66, 67], text: "Underkylt regn", emoji: "🌧️" },
+      { codes: [71, 73, 75], text: "Snöfall", emoji: "❄️" },
+      { codes: [77], text: "Snökorn", emoji: "🌨️" },
+      { codes: [80, 81, 82], text: "Skurar", emoji: "🌦️" },
+      { codes: [85, 86], text: "Snöbyar", emoji: "🌨️" },
+      { codes: [95], text: "Åska", emoji: "⛈️" },
+      { codes: [96, 99], text: "Åska med hagel", emoji: "⛈️" },
+    ];
+    for (const g of map) if (g.codes.includes(n)) return g;
+    return { text: "Okänt väder", emoji: "⛅️" };
+  }
+
+  async function fetchWeatherByCity(city) {
+    // 1) Geocoding (اسم المدينة -> إحداثيات)
+    const geo = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=sv&format=json`);
+    const geoData = await geo.json();
+    if (!geoData.results || !geoData.results.length) throw new Error("Hittade inte staden.");
+
+    const { latitude, longitude, name, country } = geoData.results[0];
+
+    // 2) الطقس الحالي
+    const w = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`);
+    const wData = await w.json();
+    if (!wData.current_weather) throw new Error("Ingen väderdata just nu.");
+
+    const { temperature, windspeed, weathercode } = wData.current_weather;
+    const d = codeToDesc(Number(weathercode));
+
+    // 3) عرض النتيجة
+    document.getElementById("w-emoji").textContent = d.emoji;
+    document.getElementById("w-title").textContent = `${name}${country ? ", " + country : ""}`;
+    document.getElementById("w-line").textContent = `Temperatur: ${temperature}°C — ${d.text}`;
+    document.getElementById("w-extra").textContent = `Vind: ${windspeed} m/s`;
+    document.getElementById("weather-card").style.display = "flex";
+    document.getElementById("weather-error").style.display = "none";
+  }
+
+  // التعامل مع البحث
+  const form = document.getElementById("weather-form");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const city = document.getElementById("city").value.trim();
+    const err = document.getElementById("weather-error");
+    const card = document.getElementById("weather-card");
+    card.style.display = "none";
+    err.style.display = "none";
+    try {
+      await fetchWeatherByCity(city || "Stockholm");
+    } catch (ex) {
+      err.textContent = ex.message || "Ett fel inträffade.";
+      err.style.display = "block";
+    }
+  });
+
+  // تحميل افتراضي لستوكهولم عند فتح الصفحة
+  fetchWeatherByCity("Stockholm").catch(() => {});
+</script>
+
+
+<section>
+  <h2>Min Soundtrack Just Nu</h2>
+  <iframe src="https://open.spotify.com/embed/track/2l5AAhJSkzcd3P1yrngMeA" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+</section>
+
+
+  <footer>
+    <p>Kontakt: <a href="mailto:rasha.alkhateeb97@gmail.com">rasha.alkhateeb97@gmail.com</a></p>
+    <p>Telefon: <a href="tel:0728540285">0728540285</a></p>
+  </footer>
+</body>
+</html>
