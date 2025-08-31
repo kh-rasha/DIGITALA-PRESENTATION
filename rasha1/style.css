@@ -60,7 +60,7 @@ header img {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* 🔥 Hover-animation */
+
 .timeline-content:hover {
   transform: scale(1.05);
   box-shadow: 0 6px 15px rgba(0,0,0,0.2);
@@ -124,22 +124,22 @@ footer a {
 /* 🔹 Responsivt beteende */
 @media (max-width: 600px) {
   .timeline {
-    border-left: none; /* نشيل الخط الجانبي */
+    border-left: none; 
     padding-left: 0;
   }
 
   .timeline-item {
-    flex-direction: column; /* نخلي السنة فوق النص */
+    flex-direction: column; 
     align-items: flex-start;
     margin-left: 20px;
   }
 
   .timeline-item::before {
-    left: -10px; /* نعدل مكان الدائرة */
+    left: -10px; 
   }
 
   .timeline-year {
-    position: relative; /* نرجعها طبيعية */
+    position: relative; 
     left: 0;
     margin-bottom: 5px;
     color: #50136e;
@@ -147,7 +147,7 @@ footer a {
   }
 
   .timeline-content {
-    width: 100%; /* تاخد عرض الشاشة */
+    width: 100%; 
     box-sizing: border-box;
   }
 }
